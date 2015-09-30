@@ -5,16 +5,18 @@ public class Project1 {
 		// BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		Lexical lex = new Lexical();
 		Printer pri = new Printer();
-		// Parse parse = new Parse(lex, pri);
-		// parse.ParseStart();
-		String token = lex.getNextToken();
-		while(token != "EOF" && token != "ERR") {
-			try {
-				System.out.print(token);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		}	
+		Parse parse = new Parse(lex, pri);
+		parse.ParseStart();
+		
+		// String token = lex.getNextToken();
+		// while(token != "EOF") {
+		// 	try {
+		// 		System.out.print(token);
+		// 	} catch(Exception e) {
+		// 		e.printStackTrace();
+		// 	}
+		// 	token = lex.getNextToken();
+		// }	
 	}
 }
 
@@ -69,6 +71,9 @@ class Lexical {
 		
 	// }
 	String getNextToken() {
+		if(line == null) {
+
+		}
 		try {
 			int tempchar;
 			tempchar = reader.read();
@@ -117,7 +122,12 @@ class Lexical {
 				return numericVal;
 			} //    ?????
 			else if(tempchar == ' ') {
-
+				while(tempchar == ' ') {
+					reader.mark(32);
+					tempchar = reader.read();
+				}			
+				reader.reset();
+				return getNextToken();
 			}
 			else {
 				System.out.println("Invalid Input: " + String.valueOf((char) tempchar) + "...");
@@ -144,42 +154,46 @@ class Parse {
 	// ParseStart will call ParseSexp and then will check for end of file. 
 	// If the end is reached, the parser will terminate. If not, ParseStart will call itself.
 	void ParseStart() { 
+		sexpList.add(sexp);
+		System.out.println("EOL" + sexp.val);
 		if(ParseSexp(0) == "EOF") {
+			Printer pri = new Printer();
+			System.out.println("call print");
+			sexpList.remove(sexpList.size()-1);
+			pri.print(sexpList);
 			System.exit(0);
 		}
 		// check end?
 		else {
-			// ParseStart();
+			ParseStart();
 		}
 	}
-	// get the next token. 
-	// If it is not Atom or OpenParenthesis, 
-	// an error will be reported. 
-	// If it is Atom, the function returns. 
-	// If it is OpenParenthesis, 
-	// the function will call itself, 
-	// then will get the next token, 
-	// report an error if it is not Dot, 
-	// call itself again, get the next token, 
-	// and report an error if it is not ClosingParenthesis.
+	// get the next token. If it is not Atom or OpenParenthesis, an error will be reported. If it is Atom, the function returns. If it is OpenParenthesis, the function will call itself, then will get the next token, report an error if it is not Dot, call itself again, get the next token, and report an error if it is not ClosingParenthesis.
 	String ParseSexp(int dir) {
 		String token = lexical.getNextToken();
+		System.out.println(token);
 		if(token == "EOF") {
 			return token;
 		}
 		else if(token == "EOL") {
-			sexpList.add(sexp);
-			sexp.reset();
+			
+			System.out.println("EOL" + sexp.val);
+			// sexp.reset();
+			sexp = new Sexp();
+			return token;
+			// ParseSexp(0);
 		}
 		else if(token == "(") {
 			ParseSexp(1);
 			token = lexical.getNextToken();
+			System.out.println(token);
 			if(token != ".") {
-				System.out.println("erro: here should be a '.'");
+				System.out.println("erro: here should be a '.' not" + token);
 				System.exit(1);
 			}
 			ParseSexp(2);
 			token = lexical.getNextToken();
+			System.out.println(token);
 			if(token != ")") {
 				System.out.println("erro: here should be a ')'");
 				System.exit(1);
@@ -190,7 +204,7 @@ class Parse {
 				sexp.kind = "literal";
 				sexp.val = token;
 			}
-			else if(dir == 1) {
+			else if(dir == 1) { // add to left child
 				sexp.isList = true;
 				sexp.left = new Sexp();
 				sexp.left.kind = "literal";
@@ -199,9 +213,10 @@ class Parse {
 				sexp = sexp.right;
 			}
 			else if(dir == 2) {
-				sexp.isList = true;
-				sexp.val = "NIL";
+				sexp.isList = (token == "NIL");
+				sexp.val = token;
 			}
+			return token;
 		}
 		else if(token.charAt(0) >= '0' && token.charAt(0) <= '9') { // numeric
 			if(dir == 0) {
@@ -217,11 +232,12 @@ class Parse {
 				sexp = sexp.right;
 			}
 			else if(dir == 2) {
-				sexp.isList = true;
-				sexp.val = "NIL";
+				sexp.isList = (token == "NIL");
+				sexp.val = token;
 			}
+			return token;
 		}
-		return null;
+		return "ERR";
 	}
 }
 
@@ -240,22 +256,30 @@ class Printer {
 	// 		}
 	// }
 	void print(List<Sexp> sexpList) {
+		// System.out.println("print List was called");
+
 		int length = sexpList.size();
+
+		System.out.println(length);
 		for(int i = 0; i < length; i++) {
-			printList(sexpList.get(i));
-			// print("\n");
+			print(sexpList.get(i));
+			System.out.print('\n');
 		}
 	}
-	void printList(Sexp sexp) {
-		if(sexp.isList) {
-			// print("(");
-			printList(sexp.left);
-			// print(".");
-			printList(sexp.right);
-			// print(")");
+	void print(Sexp sexp) {
+		// System.out.println("print was called");
+		if(sexp == null) {
+			return;
+		}
+		else if(sexp.isList) {
+			System.out.print("(");
+			print(sexp.left);
+			System.out.print(" ");
+			print(sexp.right);
+			System.out.print(")");
 		}
 		else {
-			// print(sexp.val);
+			System.out.print(sexp.val);
 		}
 	}
 }
