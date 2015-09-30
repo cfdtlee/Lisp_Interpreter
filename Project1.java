@@ -1,17 +1,20 @@
 import java.io.*;
+import java.util.*;
 public class Project1 {
 	public static void main(String[] args) {
 		// BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-		for(int i = 0; i < args.length; i++) {
-			if(args[i++] == "<") {
-				Lexical lex = new Lexical(args[i]);
+		Lexical lex = new Lexical();
+		Printer pri = new Printer();
+		// Parse parse = new Parse(lex, pri);
+		// parse.ParseStart();
+		String token = lex.getNextToken();
+		while(token != "EOF" && token != "ERR") {
+			try {
+				System.out.print(token);
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
-			else if(args[i++] == ">") {
-				Printer pri = new Printer(args[i]);
-			}
-		}
-		Parse parse = new Parse(lex, pri);
-		parse.ParseStart();
+		}	
 	}
 }
 
@@ -25,14 +28,14 @@ class Sexp {
 	Sexp() {
 		this.isList = false;
 		this.kind = null;
-		this.atom = null;
+		this.val = null;
 		this.left = null;
 		this.right = null;
 	}
 	void reset() {
 		this.isList = false;
 		this.kind = null;
-		this.atom = null;
+		this.val = null;
 		this.left = null;
 		this.right = null;
 	}
@@ -54,11 +57,17 @@ class Atom {
 
 class Lexical {
 	public File file;
-	public Reader reader;
-	Lexical(String fileName) {
-		this.file = new File(fileName);
-		this.reader = new InputStreamReader(new FileInputStream(file));
-	}
+	public String line;
+	public InputStream reader = System.in;
+	// void setInputFile(String fileName) {
+	// 	try{
+	// 		this.file = new File(fileName);
+	// 		this.reader = new InputStreamReader(new FileInputStream(file));	
+	// 	} catch(Exception e) {
+	// 		e.printStackTrace();
+	// 	}
+		
+	// }
 	String getNextToken() {
 		try {
 			int tempchar;
@@ -86,17 +95,17 @@ class Lexical {
 			else if(tempchar >= 'A' && tempchar <= 'Z') {
 				String literalVal = new String();
 				while((tempchar >= 'A' && tempchar <= 'Z') || (tempchar >= '0' && tempchar <='9')) {
-					reader.mark();
+					reader.mark(32);
 					literalVal += String.valueOf((char) tempchar);
 					tempchar = reader.read();
 				}
-				reader.reset();
+				System.in.reset();
 				return literalVal;
 			}
 			else if(tempchar >= '0' && tempchar <= '9') {
 				String numericVal = new String();
 				while(tempchar >= '0' && tempchar <='9') {
-					reader.mark()
+					reader.mark(32);
 					numericVal += String.valueOf((char) tempchar);
 					tempchar = reader.read();
 					if(tempchar <= '0' && tempchar >= '9') {
@@ -117,6 +126,7 @@ class Lexical {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return "ERR";
 	}
 }
 
@@ -139,7 +149,7 @@ class Parse {
 		}
 		// check end?
 		else {
-			ParseStart();
+			// ParseStart();
 		}
 	}
 	// get the next token. 
@@ -165,13 +175,13 @@ class Parse {
 			ParseSexp(1);
 			token = lexical.getNextToken();
 			if(token != ".") {
-				System.out.pringln("erro: here should be a '.'");
+				System.out.println("erro: here should be a '.'");
 				System.exit(1);
 			}
 			ParseSexp(2);
 			token = lexical.getNextToken();
 			if(token != ")") {
-				System.out.pringln("erro: here should be a ')'");
+				System.out.println("erro: here should be a ')'");
 				System.exit(1);
 			}
 		}
@@ -211,30 +221,33 @@ class Parse {
 				sexp.val = "NIL";
 			}
 		}
+		return null;
 	}
 }
 
 class Printer {
 	// public List<Sexp> sexpList = new ArrayList<Sexp>();
-	public File file;
-	public Writer writer
-	Printer(String fileName) {
-		// this.length = len;
-		// this.file = 
-		try (writer = new BufferedWriter(new OutputStreamWriter(
-            new FileOutputStream(fileName), "utf-8"))) {
-   				writer.write("something");
-			}
-	}
+	// public File file;
+	// public Writer writer;
+	// void setOutputFile(String fileName) {
+	// 	// this.length = len;
+	// 	// this.file = 
+	// 	try {
+	// 		this.writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "utf-8"));
+ //   				writer.write("something");
+	// 		} catch(Exception e) {
+	// 			e.printStackTrace();
+	// 		}
+	// }
 	void print(List<Sexp> sexpList) {
 		int length = sexpList.size();
 		for(int i = 0; i < length; i++) {
-			printList(length.get(i));
+			printList(sexpList.get(i));
 			// print("\n");
 		}
 	}
 	void printList(Sexp sexp) {
-		if(sexp.isList()) {
+		if(sexp.isList) {
 			// print("(");
 			printList(sexp.left);
 			// print(".");
