@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-public class Project1 {
+public class Interpreter {
 	public static void main(String[] args) {
 		// BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		Lexical lex = new Lexical();
@@ -41,19 +41,23 @@ class Sexp {
 		this.left = null;
 		this.right = null;
 	}
-}
-
-class Atom {
-	public String kind;
-	public String literalVal;
-	public int numericVal;
-	Atom(String val) {
-		this.kind = "literal";
-		this.literalVal = val;
-	}
-	Atom(int val) {
-		this.kind = "numeric";
-		this.numericVal = val;
+	public static Boolean isListTree(Sexp sexp) {
+		if(sexp == null) {
+			return true;
+		}
+		else if(sexp.right == null) {
+			return true;
+		}
+		else if(sexp.right.right == null) {
+			if(sexp.right.val.equals("NIL")) {
+				// System.out.println("True with" + sexp.right.val);
+			}
+			else {
+				// System.out.println("false!");
+				return false;
+			}
+		}
+		return isListTree(sexp.left) && isListTree(sexp.right);
 	}
 }
 
@@ -61,15 +65,6 @@ class Lexical {
 	public File file;
 	public String line;
 	public InputStream reader = System.in;
-	// void setInputFile(String fileName) {
-	// 	try{
-	// 		this.file = new File(fileName);
-	// 		this.reader = new InputStreamReader(new FileInputStream(file));	
-	// 	} catch(Exception e) {
-	// 		e.printStackTrace();
-	// 	}
-		
-	// }
 	String getNextToken() {
 		if(line == null) {
 
@@ -77,11 +72,6 @@ class Lexical {
 		try {
 			int tempchar;
 			tempchar = reader.read();
-			// while ((tempchar = reader.read()) != -1) {
-			// 	if (((char) tempchar) != '\r') {
-			// 		System.out.print((char) tempchar);
-			// 	}
-			// }
 			if(tempchar == -1) {
 				return "EOF";
 			}
@@ -158,14 +148,11 @@ class Parse {
 		// sexpList.add(sexp);
 		sexp = ParseSexp(0);
 		if(sexp == null) {
-			// Printer pri = new Printer();
-			// sexpList.remove(sexpList.size()-1);
-			// pri.print(sexpList);
 			System.exit(0);
 		}
 		// check end?
-		else if(sexp.left != null){
-			printer.print(sexp, true);
+		else if(sexp.val != null || sexp.left != null){
+			printer.launch(sexp);
 			ParseStart();
 		}
 		else {
@@ -184,11 +171,6 @@ class Parse {
 			// System.out.println("PaeseSexp reached EOL");
 			// printer.print(tempSexp, true);
 			System.out.print('\n');
-			// System.out.println(sexp.val);
-			// System.out.println("EOL" + sexp.val);
-			// sexp.reset();
-			// sexp = new Sexp();
-			// sexp0 = sexp;
 			return tempSexp;
 			// ParseSexp(0);
 		}
@@ -197,14 +179,14 @@ class Parse {
 			token = lexical.getNextToken();
 			// System.out.println(token);
 			if(token != ".") {
-				System.out.println("erro: here should be a '.' not" + token);
+				System.out.println("ERROR: here should be a '.' not" + token);
 				System.exit(1);
 			}
 			tempSexp.right = ParseSexp(2);
 			token = lexical.getNextToken();
 			// System.out.println(token);
 			if(token != ")") {
-				System.out.println("erro: here should be a ')'");
+				System.out.println("ERROR: here should be a ')'");
 				System.exit(1);
 			}
 			// System.out.println(tempSexp.)
@@ -233,11 +215,24 @@ class Parse {
 			tempSexp.val = token;
 			return tempSexp;
 		}
-		return tempSexp;
+		else{
+			System.out.println("ERROR: Invalid character" + token);
+			return tempSexp;
+		}
 	}
 }
 
 class Printer {
+	void launch(Sexp sexp) {
+		// System.out.println("print was launched");
+		if(Sexp.isListTree(sexp)) {
+			print(sexp, true);
+		}
+		else {
+			// System.out.println("print with false");
+			printRaw(sexp);
+		}
+	}
 	void print(List<Sexp> sexpList) {
 		// System.out.println("print List was called");
 		int length = sexpList.size();
@@ -252,7 +247,9 @@ class Printer {
 			// System.out.println("Printer: Nothing to print!");
 			return;
 		}
-		else if(sexp.isList) {
+		// System.out.println("isListTree?");
+		// System.out.println(sexp.isListTree());
+		if(sexp.isList) {
 			// System.out.println("left print was called");
 			System.out.print("(");
 			print(sexp.left, true);
@@ -264,7 +261,7 @@ class Printer {
 			}
 			System.out.print(")");
 		}
-		else if(!sexp.val.equals("NIL")) {
+		else if(sexp.val != null) {
 			// System.out.println("sexp isnotList");
 			System.out.print(sexp.val);
 		}
@@ -285,11 +282,27 @@ class Printer {
 			}
 			// System.out.print(")");
 		}
-		else if(!sexp.val.equals("NIL")) {
+		else if(sexp.val != null) {
 			// System.out.println("sexp isnotList");
 			// System.out.print(sexp.val.equals("NIL")); // Java string cannot use "=="
 			System.out.print(sexp.val);
 
+		}
+	}
+	void printRaw(Sexp sexp) {
+		if(sexp == null) {
+			return;
+		}
+		else if(sexp.isList) {
+			System.out.print("(");
+			printRaw(sexp.left);
+			System.out.print(" . ");
+			printRaw(sexp.right); 
+			System.out.print(")");
+		}
+		else {
+			// System.out.print("not list!");
+			System.out.print(sexp.val);
 		}
 	}
 }
