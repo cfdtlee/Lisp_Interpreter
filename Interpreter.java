@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 public class Interpreter {
 	public static void main(String[] args) {
-		// BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		Lexical lex = new Lexical();
 		Printer pri = new Printer();
 		Parse parse = new Parse(lex, pri);
@@ -76,7 +75,13 @@ class Lexical {
 				return "EOF";
 			}
 			else if(tempchar == '\n') {
-				return "EOL";
+				// return "EOL";
+				while(tempchar == '\n') {
+					reader.mark(32);
+					tempchar = reader.read();
+				}
+				System.in.reset();
+				return getNextToken();
 			}
 			else if((char)tempchar == '(') {
 				return "("; //OpenParenthesis";
@@ -163,13 +168,10 @@ class Parse {
 	Sexp ParseSexp(int dir) {
 		String token = lexical.getNextToken();
 		Sexp tempSexp = new Sexp();
-		// System.out.println(token);
 		if(token == "EOF") {
 			return null;
 		}
 		else if(token == "EOL") {
-			// System.out.println("PaeseSexp reached EOL");
-			// printer.print(tempSexp, true);
 			System.out.print('\n');
 			return tempSexp;
 			// ParseSexp(0);
@@ -227,10 +229,12 @@ class Printer {
 		// System.out.println("print was launched");
 		if(Sexp.isListTree(sexp)) {
 			print(sexp, true);
+			System.out.print('\n');
 		}
 		else {
 			// System.out.println("print with false");
 			printRaw(sexp);
+			System.out.print('\n');
 		}
 	}
 	void print(List<Sexp> sexpList) {
@@ -244,13 +248,9 @@ class Printer {
 	}
 	void print(Sexp sexp, Boolean withPa) {
 		if(sexp == null) {
-			// System.out.println("Printer: Nothing to print!");
 			return;
 		}
-		// System.out.println("isListTree?");
-		// System.out.println(sexp.isListTree());
 		if(sexp.isList) {
-			// System.out.println("left print was called");
 			System.out.print("(");
 			print(sexp.left, true);
 			if(sexp.right != null && sexp.right.val != null && sexp.right.val.equals("NIL")) {
@@ -262,17 +262,14 @@ class Printer {
 			System.out.print(")");
 		}
 		else if(sexp.val != null) {
-			// System.out.println("sexp isnotList");
 			System.out.print(sexp.val);
 		}
 	}
 	void print(Sexp sexp) {
-		// System.out.println("print was called");
 		if(sexp == null) {
 			return;
 		}
 		else if(sexp.isList) {
-			// System.out.print("(");
 			print(sexp.left, true);
 			if(sexp.right != null && sexp.right.val != null && sexp.right.val.equals("NIL")){
 			}
@@ -280,13 +277,10 @@ class Printer {
 				System.out.print(" ");
 				print(sexp.right);
 			}
-			// System.out.print(")");
 		}
 		else if(sexp.val != null) {
-			// System.out.println("sexp isnotList");
-			// System.out.print(sexp.val.equals("NIL")); // Java string cannot use "=="
+			// Java string cannot use "=="
 			System.out.print(sexp.val);
-
 		}
 	}
 	void printRaw(Sexp sexp) {
@@ -301,7 +295,6 @@ class Printer {
 			System.out.print(")");
 		}
 		else {
-			// System.out.print("not list!");
 			System.out.print(sexp.val);
 		}
 	}
