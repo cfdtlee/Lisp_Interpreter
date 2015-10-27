@@ -1,0 +1,2 @@
+(DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
+(MEM . (3 . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL))) 

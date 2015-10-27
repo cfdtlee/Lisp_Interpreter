@@ -219,6 +219,7 @@ class Parse {
 		}
 		else{
 			System.out.println("ERROR: Invalid character" + token);
+			System.exit(1);
 			return tempSexp;
 		}
 	}
