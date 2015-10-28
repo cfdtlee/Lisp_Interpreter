@@ -23,17 +23,17 @@ default: Interpreter.class Sexp.class Lexical.class Parse.class Printer.class Ev
 Interpreter.class: Interpreter.java
 		$(JCC) $(JFLAGS) Interpreter.java
 
-Sexp.class: Interpreter.java
-		$(JCC) $(JFLAGS) Interpreter.java
+Sexp.class: Sexp.java
+		$(JCC) $(JFLAGS) Sexp.java
 
-Lexical.class: Interpreter.java
-		$(JCC) $(JFLAGS) Interpreter.java
+Lexical.class: Lexical.java
+		$(JCC) $(JFLAGS) Lexical.java
 
-Parse.class: Interpreter.java
-		$(JCC) $(JFLAGS) Interpreter.java
+Parse.class: Parse.java
+		$(JCC) $(JFLAGS) Parse.java
 
-Printer.class: Interpreter.java
-		$(JCC) $(JFLAGS) Interpreter.java
+Printer.class: Printer.java
+		$(JCC) $(JFLAGS) Printer.java
 
 Evaluator.class: Evaluator.java
 		$(JCC) $(JFLAGS) Evaluator.java
