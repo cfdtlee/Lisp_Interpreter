@@ -38,7 +38,18 @@ class Evaluator {
 			}
 			if(eq(f, "EQ")) {
 				Sexp t = new Sexp();
+				if(cdr(x).right.val == null) {
+					System.out.println("ERROR: EQ can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) {
+					System.out.println("ERROR: EQ's para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				if(eq(car(x), car(cdr(x)))) {
+					System.out.println("EQ");
 					t.val = "T";
 					return t;
 				}
@@ -48,6 +59,16 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "ATOM")) {
+				if(cdr(x).val == null) {
+					System.out.println("ERROR: ATOM can only have 1 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).val.equals("NIL")) {
+					System.out.println("ERROR: ATOM's para must be a list contains 1 element");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(atom(car(x))) {
 					// System.out.println("atom?");
@@ -60,6 +81,16 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "NULL")) {
+				if(cdr(x).val == null) {
+					System.out.println("ERROR: ATOM can only have 1 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).val.equals("NIL")) {
+					System.out.println("ERROR: NULL's para must be a list contains 1 element");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(nil(car(x))) {
 					t.val = "T";
@@ -71,6 +102,16 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "INT")) {
+				if(cdr(x).val == null) {
+					System.out.println("ERROR: ATOM can only have 1 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).val.equals("NIL")) {
+					System.out.println("ERROR: INT's para must be a list contains 1 element");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(inte(car(x))) {
 					t.val = "T";
@@ -82,6 +123,16 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "PLUS")) {
+				if(cdr(x).right.val == null) {
+					System.out.println("ERROR: PLUS can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) {
+					System.out.println("ERROR: PLUS's para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x)))) {
 					int i = Integer.parseInt(car(x).val) + Integer.parseInt(car(cdr(x)).val);
@@ -89,12 +140,22 @@ class Evaluator {
 					return t;
 				}
 				else {
-					System.out.println("PLUS must has two INT opts");
+					System.out.println("ERROR: PLUS must has two INT opts");
 					System.exit(1);
 					return null;
 				}
 			}
 			if(eq(f, "MINUS")) {
+				if(cdr(x).right.val == null) {
+					System.out.println("ERROR: MINUS can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) {
+					System.out.println("ERROR: MINUS's para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x)))) {
 					int i = Integer.parseInt(car(x).val) - Integer.parseInt(car(cdr(x)).val);
@@ -102,12 +163,22 @@ class Evaluator {
 					return t;
 				}
 				else {
-					System.out.println("MINUS must has two INT opts");
+					System.out.println("ERROR: MINUS must has two INT opts");
 					System.exit(1);
 					return null;
 				}
 			}
 			if(eq(f, "TIMES")) {
+				if(cdr(x).right.val == null) {
+					System.out.println("ERROR: TIMES can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) {
+					System.out.println("ERROR: TIMES's para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x)))) {
 					int i = Integer.parseInt(car(x).val) * Integer.parseInt(car(cdr(x)).val);
@@ -115,12 +186,22 @@ class Evaluator {
 					return t;
 				}
 				else {
-					System.out.println("TIMES must has two INT opts");
+					System.out.println("ERROR: TIMES must has two INT opts");
 					System.exit(1);
 					return null;
 				}
 			}
 			if(eq(f, "QUOTIENT")) {
+				if(cdr(x).right.val == null) {
+					System.out.println("ERROR: QUOTIENT can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) {
+					System.out.println("ERROR: QUOTIENT's para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x))) && !car(cdr(x)).val.equals("0")) {
 					int i = Integer.parseInt(car(x).val) / Integer.parseInt(car(cdr(x)).val);
@@ -128,17 +209,27 @@ class Evaluator {
 					return t;
 				}
 				else if(!car(cdr(x)).val.equals("0")){
-					System.out.println("QUOTIENT must has two INT opts");
+					System.out.println("ERROR: QUOTIENT must has two INT opts");
 					System.exit(1);
 					return null;
 				}
 				else {
-					System.out.println("TRY to divide by 0");
+					System.out.println("ERROR: TRY to divide by 0");
 					System.exit(1);
 					return null;
 				}
 			}
 			if(eq(f, "REMAINDER")) {
+				if(cdr(x).right.val == null) {
+					System.out.println("ERROR: REMAINDER can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) {
+					System.out.println("ERROR: REMAINDER's para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x)))) {
 					int i = Integer.parseInt(car(x).val) % Integer.parseInt(car(cdr(x)).val);
@@ -146,12 +237,22 @@ class Evaluator {
 					return t;
 				}
 				else {
-					System.out.println("REMAINDER must has two INT opts");
+					System.out.println("ERROR: REMAINDER must has two INT opts");
 					System.exit(1);
 					return null;
 				}
 			}
 			if(eq(f, "LESS")) {
+				if(cdr(x).right.val == null) {
+					System.out.println("ERROR: LESS can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) {
+					System.out.println("ERROR: LESS's para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x)))) {
 					Boolean i = Integer.parseInt(car(x).val) > Integer.parseInt(car(cdr(x)).val);
@@ -159,13 +260,23 @@ class Evaluator {
 					return t;
 				}
 				else {
-					System.out.println("LESS must has two INT opts");
+					System.out.println("ERROR: LESS must has two INT opts");
 					System.exit(1);
 					return null;
 				}
 			}
 			
 			if(eq(f, "GREATER")) {
+				if(cdr(x).right.val == null) {
+					System.out.println("ERROR: GREATER can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) {
+					System.out.println("ERROR: GREATER's para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x)))) {
 					Boolean i = Integer.parseInt(car(x).val) < Integer.parseInt(car(cdr(x)).val);
@@ -173,20 +284,20 @@ class Evaluator {
 					return t;
 				}
 				else {
-					System.out.println("GREATER must has two INT opts");
+					System.out.println("ERROR: GREATER must has two INT opts");
 					System.exit(1);
 					return null;
 				}
 			}
 			
 			else {
-				System.out.println(f.val + " is not defuned");
+				System.out.println("ERROR: " + f.val + " is not defuned");
 				System.exit(1);
 				return null;
 			}
 		}
 		else {
-			System.out.println("f is not an atom");
+			System.out.println("ERROR: f is not an atom");
 			System.exit(1);
 			return null;
 		}
@@ -201,23 +312,23 @@ class Evaluator {
 	}
 	Boolean inte(Sexp sexp) {
 		String str = sexp.val;
-		if(str.charAt(0) != '-' && (str.charAt(0) < '0' || str.charAt(0) >= '9')) return false;
+		// if(str == null) return false;
+		if(str.charAt(0) != '-' && (str.charAt(0) < '0' || str.charAt(0) > '9')) return false;
 		for(int i = 1; i < str.length(); i++) {
 			if(str.charAt(i) > '9' && str.charAt(i) < '0') return false;
-
 		}
 		return true;
 	}
 	Sexp car(Sexp sexp) {
 		if(atom(sexp)) {
-			System.out.println(sexp.val + " is not a list");
+			System.out.println("ERROR: " + sexp.val + " is not a list");
 			System.exit(1);
 		}
 		return sexp.left;
 	}
 	Sexp cdr(Sexp sexp) {
 		if(atom(sexp)) {
-			System.out.println(sexp.val + " is not a list");
+			System.out.println("ERROR: " + sexp.val + " is not a list");
 			System.exit(1);
 		}
 		return sexp.right;
@@ -227,12 +338,15 @@ class Evaluator {
 	}
 	Boolean eq(Sexp x1, Sexp x2) { //
 		if(atom(x1) && atom(x2)) {
+			System.out.println("&&");
 			return x1.val.equals(x2.val);
 		}
 		if(atom(x1) || atom(x2)) {
+			System.out.println("||");
 			return false;
 		}
 		else {
+			System.out.println("not yet");
 			return eq(car(x1), car(x2)) && eq(cdr(x1), cdr(x2));
 		}
 	}
@@ -250,7 +364,7 @@ class Evaluator {
 	}
 	Sexp evcon(Sexp x) {
 		if(nil(x)) {
-			System.out.println("COND's para cannot be empty!");
+			System.out.println("ERROR: COND's para cannot be empty!");
 			System.exit(1);
 			return null;
 		}
