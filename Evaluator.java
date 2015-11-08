@@ -49,7 +49,7 @@ class Evaluator {
 					return null;
 				}
 				if(eq(car(x), car(cdr(x)))) {
-					System.out.println("EQ");
+					// System.out.println("EQ");
 					t.val = "T";
 					return t;
 				}
@@ -255,8 +255,8 @@ class Evaluator {
 				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x)))) {
-					Boolean i = Integer.parseInt(car(x).val) > Integer.parseInt(car(cdr(x)).val);
-					t.val = i ? "NIL" : "T";
+					Boolean i = Integer.parseInt(car(x).val) < Integer.parseInt(car(cdr(x)).val);
+					t.val = i ? "T" : "NIL";
 					return t;
 				}
 				else {
@@ -279,8 +279,8 @@ class Evaluator {
 				}
 				Sexp t = new Sexp();
 				if(inte(car(x)) && inte(car(cdr(x)))) {
-					Boolean i = Integer.parseInt(car(x).val) < Integer.parseInt(car(cdr(x)).val);
-					t.val = i ? "NIL" : "T";
+					Boolean i = Integer.parseInt(car(x).val) > Integer.parseInt(car(cdr(x)).val);
+					t.val = i ? "T" : "NIL";
 					return t;
 				}
 				else {
@@ -312,7 +312,7 @@ class Evaluator {
 	}
 	Boolean inte(Sexp sexp) {
 		String str = sexp.val;
-		// if(str == null) return false;
+		if(str == null) return false;
 		if(str.charAt(0) != '-' && (str.charAt(0) < '0' || str.charAt(0) > '9')) return false;
 		for(int i = 1; i < str.length(); i++) {
 			if(str.charAt(i) > '9' && str.charAt(i) < '0') return false;
@@ -338,11 +338,11 @@ class Evaluator {
 	}
 	Boolean eq(Sexp x1, Sexp x2) { //
 		if(atom(x1) && atom(x2)) {
-			System.out.println("&&");
+			// System.out.println("&&");
 			return x1.val.equals(x2.val);
 		}
 		if(atom(x1) || atom(x2)) {
-			System.out.println("||");
+			// System.out.println("||");
 			return false;
 		}
 		else {
