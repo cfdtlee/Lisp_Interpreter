@@ -9,6 +9,7 @@ class Parse {
 	public List<Sexp> sexpList = new ArrayList<Sexp>();
 	public Sexp sexp = new Sexp();
 	public Sexp sexp0 = sexp;
+	public Sexp d = new Sexp();
 	Parse(Lexical lex, Printer pri, Evaluator eva) {
 		this.lexical = lex;
 		this.printer = pri;
@@ -24,7 +25,7 @@ class Parse {
 		}
 		// check end?
 		else if(sexp.val != null || sexp.left != null){
-			sexp = evaluator.eval(sexp);
+			sexp = evaluator.eval(sexp, new Sexp(), d);
 			// System.out.println("sexp.val = "+sexp.val);
 			printer.launch(sexp);
 			ParseStart();

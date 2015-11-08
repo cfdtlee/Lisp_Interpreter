@@ -7,10 +7,18 @@ import java.util.*;
 // LESS, GREATER, 
 // CONS, CAR, CDR, COND, 
 class Evaluator {
-	Sexp eval(Sexp sexp) {
+	Sexp eval(Sexp sexp, Sexp a, Sexp d) {
 		if (atom(sexp)) {
 			// atom
-			return sexp;
+			if (sexp.val.equals("T") || sexp.val.equals("NIL") || inte(sexp))
+				return sexp;
+			else if (bound(exp, a))
+				return getval(exp, a);
+			else {
+				System.out.println("ERROR: UNBOUNDED LITERAL");
+				exit(1);
+				return null;
+			}
 		}
 		else {
 			if (sexp.left.val.equals("QUOTE")) {
@@ -372,5 +380,13 @@ class Evaluator {
 			return eval(car(cdr(car(x))));
 		}
 		else return evcon(cdr(x));
+	}
+	Boolean bound(Sexp exp, Sexp z) {
+		if(nil(car(z))) return false;
+		return exp.val.equals(car(car(z)).val) || bound(cdr(exp), z);
+	}
+	Sexp getval(Sexp exp, Sexp z) {
+		if(exp.val.equals(car(car(z)).val)) return cdr(car(z));
+		else return getval(exp, cdr(z));
 	}
 }
