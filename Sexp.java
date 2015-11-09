@@ -14,6 +14,15 @@ class Sexp {
 		this.left = null;
 		this.right = null;
 	}
+	Sexp(Sexp sexp) {
+		this.isList = sexp.isList;
+		this.kind = sexp.kind;
+		this.val = sexp.val;
+		if(sexp.left != null) this.left = new Sexp(sexp.left);
+		else this.left = null;
+		if(sexp.right != null) this.right = new Sexp(sexp.right);
+		else this.right = null;
+	}
 	void reset() {
 		this.isList = true;
 		this.kind = null;
