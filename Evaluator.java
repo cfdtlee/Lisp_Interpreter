@@ -39,17 +39,17 @@ class Evaluator {
 				res.right = d.right;
 				d.right = new Sexp(res);
 				// defun(sexp, d);
-				System.out.println("dlist now is:");
-				Printer pt = new Printer();
-				pt.launch(d); //??
+				// System.out.println("dlist now is:");
+				// Printer pt = new Printer();
+				// pt.launch(d); //??
 				return new Sexp(car(cdr(sexp)));
 				// return new Sexp(car(cdr(sexp)));
 			}
-			System.out.println("apply "+car(sexp).val+" to ");
-			System.out.println(sexp.right.left.val + " " + sexp.right.right.left.val);
-			System.out.println("dlist in apply is:");
-			Printer pt1 = new Printer();
-			pt1.launch(d);
+			// System.out.println("apply "+car(sexp).val+" to ");
+			// System.out.println(sexp.right.left.val + " " + sexp.right.right.left.val);
+			// System.out.println("dlist in apply is:");
+			// Printer pt1 = new Printer();
+			// pt1.launch(d);
 			return apply(car(sexp), evlist(cdr(sexp), a, d), a, d); // a, d
 		}
 	}
@@ -59,9 +59,9 @@ class Evaluator {
 		sexp.right = t;
 	}
 	Sexp apply(Sexp f, Sexp x, Sexp a, Sexp d) {
-		System.out.println("dlist in apply is:");
-		Printer pt1 = new Printer();
-		pt1.launch(d);
+		// System.out.println("dlist in apply is:");
+		// Printer pt1 = new Printer();
+		// pt1.launch(d);
 		if (atom(f)) {
 			// atom
 			// System.out.println("atom" + f.val);
@@ -329,9 +329,9 @@ class Evaluator {
 			}
 			
 			else {
-				System.out.println("dlist is:");
-				Printer pt = new Printer();
-				pt.launch(d);
+				// System.out.println("dlist is:");
+				// Printer pt = new Printer();
+				// pt.launch(d);
 				return eval(cdr(getval(f, d)), addpair(car(getval(f, d)), x, a), d);
 				// System.out.println("ERROR: " + f.val + " is not defuned");
 				// System.exit(1);
@@ -433,7 +433,7 @@ class Evaluator {
 		else return getval(exp, cdr(z));
 	}
 	Sexp addpair(Sexp formalPara, Sexp x, Sexp a) { //add (formalPara, x) to a, and return a
-		System.out.println("in addpair");
+		// System.out.println("in addpair");
 		if(lengthOf(formalPara) != lengthOf(x)) {
 			System.out.println("ERROR: Number of formal parameters is not equal to number of actuall parameters!");
 			System.exit(0);
@@ -444,7 +444,7 @@ class Evaluator {
 		res.left = new Sexp();
 		res.left.left = new Sexp(car(formalPara));
 		res.left.right = new Sexp(car(x));
-		System.out.println("add" + car(formalPara).val + car(x).val);
+		// System.out.println("add" + car(formalPara).val + car(x).val);
 		res.right = addpair(cdr(formalPara), cdr(x), a);
 		return res;
 	}

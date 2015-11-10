@@ -14,29 +14,34 @@ class Parse {
 		this.lexical = lex;
 		this.printer = pri;
 		this.evaluator = eva;
+		d.left = new Sexp();
+		d.left.left = new Sexp();
+		d.left.left.val = "NOTAFUNCTION";
+		d.left.right = new Sexp();
+		d.left.right.val = "NIL";
+		d.right = new Sexp();
+		d.right.val = "NIL";
+		Sexp sa = new Sexp();
+		sa.val = "NIL";
+		// System.out.println("dlist is:");
+		// Printer pt = new Printer();
+		// pt.launch(d);
 	}
 	// ParseStart will call ParseSexp and then will check for end of file. 
 	// If the end is reached, the parser will terminate. If not, ParseStart will call itself.
 	void ParseStart() { 
 		// sexpList.add(sexp);
+		// Printer pt1 = new Printer();
+		// System.out.println("after eval");
+		// pt1.launch(d);
 		sexp = ParseSexp(0);
 		if(sexp == null) {
 			System.exit(0);
 		}
 		// check end?
 		else if(sexp.val != null || sexp.left != null){
-			d.left = new Sexp();
-			d.left.left = new Sexp();
-			d.left.left.val = "NOTAFUNCTION";
-			d.left.right = new Sexp();
-			d.left.right.val = "NIL";
-			d.right = new Sexp();
-			d.right.val = "NIL";
 			Sexp sa = new Sexp();
 			sa.val = "NIL";
-			System.out.println("dlist is:");
-			Printer pt = new Printer();
-			pt.launch(d);
 			sexp = evaluator.eval(sexp, sa, d);
 			
 			// System.out.println("sexp.val = "+sexp.val);
