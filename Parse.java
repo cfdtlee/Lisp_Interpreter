@@ -25,7 +25,20 @@ class Parse {
 		}
 		// check end?
 		else if(sexp.val != null || sexp.left != null){
-			sexp = evaluator.eval(sexp, new Sexp(), d);
+			d.left = new Sexp();
+			d.left.left = new Sexp();
+			d.left.left.val = "NOTAFUNCTION";
+			d.left.right = new Sexp();
+			d.left.right.val = "NIL";
+			d.right = new Sexp();
+			d.right.val = "NIL";
+			Sexp sa = new Sexp();
+			sa.val = "NIL";
+			System.out.println("dlist is:");
+			Printer pt = new Printer();
+			pt.launch(d);
+			sexp = evaluator.eval(sexp, sa, d);
+			
 			// System.out.println("sexp.val = "+sexp.val);
 			printer.launch(sexp);
 			ParseStart();

@@ -1,7 +1,8 @@
-(EQ.(1.(2.(3. NIL))))
-(COND . ((F . ((PLUS .(3 . (5. NIL))) . NIL)) . ((B1 . (E1 . NIL)) . NIL)))
-(EQ.(1.(2.(3. NIL)))) ?
-(PLUS.(1.(2.(3. NIL)))) ?
-(EQ . (5 . (5 . 5))) ?
-(ATOM . (X . NIL))
-(ATOM . (PLUS . ( 3 . (TIMES . ( 5 . (7. NIL))))))
+(DEFUN . (ADDUP . ((X . (Y . NIL)) . ((PLUS . (X . (Y . NIL))) . NIL))))
+(ADDUP . (1 . (2 . NIL)))
+(ADDUP . (2 . (3 . NIL)))
+(DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
+(MEM . (3 . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL))) 
+(DEFUN . (ADDONE . ((X . NIL) . ((PLUS . (X . (1 . NIL))) . NIL))))
+(ADDONE . (5 . NIL))
+(ADDONE . ((ADDONE . (5 . NIL)) . NIL))
