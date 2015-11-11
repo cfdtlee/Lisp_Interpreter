@@ -14,3 +14,9 @@
 (PLUS . (X . Y))
 (PLUS.(1.(2.(3. NIL))))
 TT12
+X
+(QUOTE . 5)
+(QUOTE . ((5 . (6 . NIL)) . (7 . NIL)))
+(COND . ((NIL . (5 . NIL)) . ((T . (6 . (7 . NIL))) . NIL)))
+(CONS . (5 . (6 . (7 . NIL))))
+(EQ . ((QUOTE . ((5 . NIL) . NIL)) . (5 . NIL)))

@@ -1,6 +1,6 @@
 (DEFUN . (ADDUP . ((X . (Y . NIL)) . ((PLUS . (X . (Y . NIL))) . NIL))))
 (ADDUP . (1 . (2 . NIL)))
-(ADDUP . (2 . (3 . NIL)))
+(ADDUP . ((ADDUP . (1 . (2 . NIL))) . ((ADDUP . (1 . (2 . NIL))) . NIL)))
 (DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
 (MEM . (3 . ((QUOTE . ((2 . (3 . (4 . NIL))) . NIL)) . NIL))) 
 (DEFUN . (ADDONE . ((X . NIL) . ((PLUS . (X . (1 . NIL))) . NIL))))

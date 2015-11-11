@@ -424,8 +424,6 @@ class Evaluator {
 		return exp.val.equals(car(car(z)).val) || bound(exp, cdr(z));
 	}
 	Sexp getval(Sexp exp, Sexp z) { // 
-		// System.out.println("in getval" + car(car(z)).val);
-		// System.out.println("in getval exp.val is:" + exp.val);
 		if(exp.val.equals(car(car(z)).val)) {
 			// System.out.println("equals" + cdr(car(z)).right.left.left.val);
 			return cdr(car(z));
@@ -433,7 +431,6 @@ class Evaluator {
 		else return getval(exp, cdr(z));
 	}
 	Sexp addpair(Sexp formalPara, Sexp x, Sexp a) { //add (formalPara, x) to a, and return a
-		// System.out.println("in addpair");
 		if(lengthOf(formalPara) != lengthOf(x)) {
 			System.out.println("ERROR: Number of formal parameters is not equal to number of actuall parameters!");
 			System.exit(0);
