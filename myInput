@@ -9,3 +9,8 @@
 (DEFUN . (MEM . ((X . (LIST . NIL)) . ((COND . (((NULL . (LIST . NIL)) . (NIL . NIL)) . ((T . ((COND . (((EQ . (X . ((CAR . (LIST . NIL)) . NIL))) . (T . NIL)) . ((T . ((MEM . (X . ((CDR . (LIST . NIL)) . NIL))) . NIL)) . NIL))) . NIL)) . NIL))) . NIL))))
 (DEFUN . (UNI . ((S1 . (S2 . NIL)) . ((COND . (((NULL . (S1 . NIL)) . (S2 . NIL)) . (((NULL . (S2 . NIL)) . (S1 . NIL)) . ((T . ((COND . (((MEM . ((CAR . (S1 . NIL)) . (S2 . NIL))) . ((UNI . ((CDR . (S1 . NIL)) . (S2 . NIL))) . NIL)) . ((T . ((CONS . ((CAR . (S1 . NIL)) . ((UNI . ((CDR . (S1 . NIL)) . (S2 . NIL))) . NIL))) . NIL)) . NIL))) . NIL)) . NIL)))) . NIL))))
 (UNI . ((QUOTE . ((3 . (4 . (2 . NIL))) . NIL)) . ((QUOTE . ((3 . (5 . (1 . (4 . NIL)))) . NIL)) . NIL)))
+(DEFUN . (R . ((Y . (X . NIL)) . ((QUOTIENT . (Y . (X . NIL))) . NIL))))
+(DEFUN . (P . ((Y . (X . NIL)) . ((COND . (((EQ . (Y . (1 . NIL))) . (1 . NIL)) . ((T . ((TIMES . (Y . ((Q . ((R . (Y . (X . NIL))) . (X . NIL))) . NIL))) . NIL)) . NIL))) . NIL))))
+(DEFUN . (Q . ((X . (Y . NIL)) . ((COND . (((EQ . (X . (1 . NIL))) . (1 . NIL)) . ((T . ((TIMES . (X . ((P . ((R . (X . (Y . NIL))) . (Y . NIL))) . NIL))) . NIL)) . NIL))) . NIL))))
+(P . (16 . (2 . NIL)))
+(Q . (16 . (3 . NIL)))
