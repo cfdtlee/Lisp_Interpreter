@@ -17,13 +17,19 @@ class Evaluator {
 				return getval(sexp, a);
 			}
 			else {
-				System.out.println("ERROR: UNBOUNDED LITERAL");
+				System.out.println("ERROR: UNBOUNDED LITERAL:" + sexp.val);
 				System.exit(1);
 				return null;
 			}
 		}
 		else {
 			if (sexp.left.val.equals("QUOTE")) {
+				Sexp x = cdr(sexp);
+				if(x == null || cdr(x) == null || cdr(x).val == null) {// less than one para
+					System.out.println("ERROR: QUOTE must have 1 para");
+					System.exit(1);
+					return null;
+				}
 				return car(cdr(sexp));
 			}
 			if (sexp.left.val.equals("COND")) {
@@ -66,22 +72,43 @@ class Evaluator {
 			// atom
 			// System.out.println("atom" + f.val);
 			if(eq(f, "CAR")) {
+				if(x == null || cdr(x) == null || cdr(x).val == null) {// less than one para
+					System.out.println("ERROR: CAR can only have 1 para");
+					System.exit(1);
+					return null;
+				}
+
 				return car(car(x));
 			}
 			if(eq(f, "CDR")) {
+				if(x == null || cdr(x) == null || cdr(x).val == null) {// less than one para
+					System.out.println("ERROR: CDR can only have 1 para");
+					System.exit(1);
+					return null;
+				}
 				return cdr(car(x));
 			}
 			if(eq(f, "CONS")) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
+					System.out.println("ERROR: CONS can only have 2 para");
+					System.exit(1);
+					return null;
+				}
+				if(!cdr(x).right.val.equals("NIL")) { // more than 2 para
+					System.out.println("ERROR: CONS' para must be a list contains 2 elements");
+					System.exit(1);
+					return null;
+				}
 				return cons(car(x), car(cdr(x)));
 			}
 			if(eq(f, "EQ")) {
 				Sexp t = new Sexp();
-				if(cdr(x).right.val == null) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
 					System.out.println("ERROR: EQ can only have 2 para");
 					System.exit(1);
 					return null;
 				}
-				if(!cdr(x).right.val.equals("NIL")) {
+				if(!cdr(x).right.val.equals("NIL")) { // more than 2 para
 					System.out.println("ERROR: EQ's para must be a list contains 2 elements");
 					System.exit(1);
 					return null;
@@ -97,12 +124,12 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "ATOM")) {
-				if(cdr(x).val == null) {
+				if(x == null || cdr(x) == null || cdr(x).val == null) {// less than one para
 					System.out.println("ERROR: ATOM can only have 1 para");
 					System.exit(1);
 					return null;
 				}
-				if(!cdr(x).val.equals("NIL")) {
+				if(!cdr(x).val.equals("NIL")) { // more than one para
 					System.out.println("ERROR: ATOM's para must be a list contains 1 element");
 					System.exit(1);
 					return null;
@@ -119,7 +146,7 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "NULL")) {
-				if(cdr(x).val == null) {
+				if(x == null || cdr(x) == null || cdr(x).val == null) {
 					System.out.println("ERROR: ATOM can only have 1 para");
 					System.exit(1);
 					return null;
@@ -140,7 +167,7 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "INT")) {
-				if(cdr(x).val == null) {
+				if(x == null || cdr(x) == null || cdr(x).val == null) {
 					System.out.println("ERROR: ATOM can only have 1 para");
 					System.exit(1);
 					return null;
@@ -161,7 +188,7 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "PLUS")) {
-				if(cdr(x).right.val == null) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
 					System.out.println("ERROR: PLUS can only have 2 para");
 					System.exit(1);
 					return null;
@@ -184,7 +211,7 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "MINUS")) {
-				if(cdr(x).right.val == null) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
 					System.out.println("ERROR: MINUS can only have 2 para");
 					System.exit(1);
 					return null;
@@ -207,7 +234,7 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "TIMES")) {
-				if(cdr(x).right.val == null) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
 					System.out.println("ERROR: TIMES can only have 2 para");
 					System.exit(1);
 					return null;
@@ -230,7 +257,7 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "QUOTIENT")) {
-				if(cdr(x).right.val == null) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
 					System.out.println("ERROR: QUOTIENT can only have 2 para");
 					System.exit(1);
 					return null;
@@ -258,7 +285,7 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "REMAINDER")) {
-				if(cdr(x).right.val == null) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
 					System.out.println("ERROR: REMAINDER can only have 2 para");
 					System.exit(1);
 					return null;
@@ -281,7 +308,7 @@ class Evaluator {
 				}
 			}
 			if(eq(f, "LESS")) {
-				if(cdr(x).right.val == null) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
 					System.out.println("ERROR: LESS can only have 2 para");
 					System.exit(1);
 					return null;
@@ -305,7 +332,7 @@ class Evaluator {
 			}
 			
 			if(eq(f, "GREATER")) {
-				if(cdr(x).right.val == null) {
+				if(x == null || cdr(x) == null || cdr(x).right == null || cdr(x).right.val == null) {
 					System.out.println("ERROR: GREATER can only have 2 para");
 					System.exit(1);
 					return null;
@@ -420,10 +447,14 @@ class Evaluator {
 		else return evcon(cdr(x), a, d);
 	}
 	Boolean bound(Sexp exp, Sexp z) {
-		if(nil(car(z))) return false;
+		if(car(z) == null || nil(car(z))) return false;
 		return exp.val.equals(car(car(z)).val) || bound(exp, cdr(z));
 	}
 	Sexp getval(Sexp exp, Sexp z) { // 
+		if(z == null || car(z) == null) {
+			System.out.println("ERROR: UNDEFUNED FUCTION: " + exp.val);
+			System.exit(1);
+		}
 		if(exp.val.equals(car(car(z)).val)) {
 			// System.out.println("equals" + cdr(car(z)).right.left.left.val);
 			return cdr(car(z));
