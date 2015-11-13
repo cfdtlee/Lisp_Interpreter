@@ -56,6 +56,10 @@ class Evaluator {
 			// System.out.println("dlist in apply is:");
 			// Printer pt1 = new Printer();
 			// pt1.launch(d);
+			// if(cdr(cdr(sexp)).val != "NIL") {
+			// 	System.out.println("ERROR: "+car(sexp).val+" has invalid parameters");
+			// 	System.exit(1);
+			// }
 			return apply(car(sexp), evlist(cdr(sexp), a, d), a, d); // a, d
 		}
 	}
@@ -442,9 +446,19 @@ class Evaluator {
 			return null;
 		}
 		if(eval(car(car(x)), a, d).val.equals("T")) {
+			// if(cdr(cdr(car(x))).val != "NIL") {
+			// 	System.out.println("ERROR: COND has invalid parameters");
+			// 	System.exit(1);
+			// }
 			return eval(car(cdr(car(x))), a, d);
 		}
-		else return evcon(cdr(x), a, d);
+		else if(eval(car(car(x)), a, d).val.equals("NIL")) 
+			return evcon(cdr(x), a, d);
+		else {
+			System.out.println("ERROR: COND's CONDITION must be a BOOLEAN value!");
+			System.exit(1);
+			return null;
+		}
 	}
 	Boolean bound(Sexp exp, Sexp z) {
 		if(car(z) == null || nil(car(z))) return false;

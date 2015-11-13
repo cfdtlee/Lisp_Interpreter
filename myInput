@@ -14,3 +14,49 @@
 (DEFUN . (Q . ((X . (Y . NIL)) . ((COND . (((EQ . (X . (1 . NIL))) . (1 . NIL)) . ((T . ((TIMES . (X . ((P . ((R . (X . (Y . NIL))) . (Y . NIL))) . NIL))) . NIL)) . NIL))) . NIL))))
 (P . (16 . (2 . NIL)))
 (Q . (16 . (3 . NIL)))
+
+
+
+
+
+(1.NIL))) . (T . NIL)) . NIL)))
+(A . (B . (C . NIL))) . NIL)) . NIL)) . NIL)))
+(QUOTE . ((3 . (4 . (5 . NIL))) . NIL))
+(NULL . (NIL . NIL))
+(ATOM . ((PLUS . (12 .( (TIMES . (31 . (14 . NIL))). NIL))).NIL))
+(ATOM . ((QUOTE . ( X . NIL) ).NIL))
+(ATOM . (17. NIL))
+(EQ . ( 22 . (( PLUS .( 11 . ( 12. NIL ))). NIL)))
+(EQ . ( T . ( NIL . NIL )))
+(EQ . ( T . ( T . NIL )))
+(EQ . (5 . (5 . NIL)))
+(GREATER . (5 . (6. NIL)))
+(INT . ((CONS . (4 . (5 . NIL))) . NIL))
+(INT . ((QUOTIENT . (3 . (5. NIL))) . NIL))
+(MINUS . ( 25 . ( 53 . NIL)))
+(PLUS . (5 . (6 . NIL)))
+(PLUS . ((TIMES . ((QUOTIENT . (19 . ((MINUS . (2 . (27 . NIL))) . NIL))) . (12 . NIL))) . ((REMAINDER . ((PLUS . ((TIMES . ((QUOTIENT . ((MINUS . (2 . (27 . NIL))) . (12 . NIL))) . (12 . NIL))) . ((REMAINDER . (19 . (12 . NIL))) . NIL))) . (12 . NIL))) . NIL)))
+(REMAINDER . ( (MINUS . ( 60 . ( 65 . NIL))) . ( (MINUS . ( 50 . ( 53 . NIL))) . NIL)))
+(REMAINDER . ((MINUS . (0 . (5 . NIL))) . ((MINUS . (0 . (3 . NIL))) . NIL)))
+(REMAINDER . ((MINUS . (0 . (5 . NIL))) . (3 . NIL)))
+
+(CAR . ((QUOTE . (((A . (B . NIL)) . (C . NIL)) . NIL)) . NIL))
+(CAR . ((QUOTE . ((A . (B . (C . NIL))) . NIL)) . NIL))
+
+!!(CAR . (QUOTE . ((3 . (4 . (5 . NIL))) . NIL)))
+
+(CDR . ((QUOTE . ((A . (B . (C . NIL))) . NIL)) . NIL))
+(CDR . ((QUOTE . ((A . NIL) . NIL)) . NIL))
+(COND . (((NULL.(3.NIL)) . ((PLUS .(3 . (5. NIL))) . NIL)) . (((INT.((QUOTIENT . (3 . (5. NIL))).NIL)) . (T . NIL)) . NIL)))
+
+!!!(COND . (((NULL.(3.NIL)) . ((PLUS .(3 . (5. NIL))) . NIL)) . (((LESS.((QUOTIENT . (3 . (5. NIL))) . 
+(COND . (((NULL.(NIL.NIL)) . ((PLUS .(3 . (5. NIL))) . NIL)) . ((B1 . (E1 . NIL)) . NIL)))
+(COND . ((T . ((PLUS .(3 . (5. NIL))) . NIL)) . ((B1 . (E1 . NIL)) . NIL)))
+
+
+(EQ . (23 . (23 . NIL)))
+(EQ . (23 . (24 . NIL)))
+(EQ . ((QUOTE . (XYZ1 . NIL)) . ((QUOTE . (XYZ1 . NIL)) . NIL)))
+(EQ . ((QUOTE . (A . NIL)) . ((QUOTE . (B . NIL)) . NIL)))
+(COND . (((GREATER . (5 . (5 . NIL))) . ((QUOTE . (GR . NIL)) . NIL)) . (((LESS . (5 . (5 . NIL))) . ((QUOTE . (LS . NIL)) . NIL)) . (((EQ . (5 . (5 . NIL))) . ((QUOTE . (EQ . NIL)) . NIL)) . NIL))))
+(PLUS . (5 . ((COND . (((EQ . (6 . ((PLUS . (2 . (4 . NIL))) . NIL))) . (7 . NIL)) . ((X . (8 . NIL)) . NIL))) . NIL)))

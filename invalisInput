@@ -1,11 +1,11 @@
+X
+TT12
 (7.NIL)
-(ATOM . (PLUS . ( 3 . (TIMES . ( 5 . (7. NIL))))))
 (ATOM . (X . NIL))
+(COND . ((F . ((PLUS .(3 . (5. NIL))) . NIL)) . ((B1 . (E1 . NIL)) . NIL)))
 (ATOM . 4)
 (ATOM . 7)
-(COND . ((F . ((PLUS .(3 . (5. NIL))) . NIL)) . ((B1 . (E1 . NIL)) . NIL)))
-(COND.((7.(6.NIL)).NIL))
-(COND.((T.(NIL.(NIL.NIL))).NIL))
+(EQ . ((QUOTE . ((5 . NIL) . NIL)) . (5 . NIL)))
 (EQ . (5 . (5 . 5)))
 (EQ.(1.(2.(3. NIL))))
 (EQ.(12.NIL))
@@ -13,10 +13,10 @@
 (PLUS . (5 . 6))
 (PLUS . (X . Y))
 (PLUS.(1.(2.(3. NIL))))
-TT12
-X
-(QUOTE . 5)
 (QUOTE . ((5 . (6 . NIL)) . (7 . NIL)))
-(COND . ((NIL . (5 . NIL)) . ((T . (6 . (7 . NIL))) . NIL)))
 (CONS . (5 . (6 . (7 . NIL))))
-(EQ . ((QUOTE . ((5 . NIL) . NIL)) . (5 . NIL)))
+(QUOTE . 5)
+(COND . ((NIL . (5 . NIL)) . ((T . (6 . (7 . NIL))) . NIL)))
+(COND.((7.(6.NIL)).NIL))
+(COND.((T.(NIL.(NIL.NIL))).NIL))
+(ATOM . (PLUS . ( 3 . (TIMES . ( 5 . (7. NIL))))))
