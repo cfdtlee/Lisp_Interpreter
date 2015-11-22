@@ -6,6 +6,7 @@ class Parse {
 	public Lexical lexical;
 	public Printer printer;
 	public Evaluator evaluator;
+	public Typechecker typechecker;
 	public List<Sexp> sexpList = new ArrayList<Sexp>();
 	public Sexp sexp = new Sexp();
 	public Sexp sexp0 = sexp;
@@ -42,9 +43,8 @@ class Parse {
 		else if(sexp.val != null || sexp.left != null){
 			Sexp sa = new Sexp();
 			sa.val = "NIL";
-			sexp = evaluator.eval(sexp, sa, d);
-			
-			// System.out.println("sexp.val = "+sexp.val);
+			// sexp = evaluator.eval(sexp, sa, d);
+			typechecker.check(sexp);
 			printer.launch(sexp);
 			ParseStart();
 		}

@@ -14,7 +14,7 @@ JFLAGS = -g
 # typing 'make' will invoke the first target entry in the makefile 
 # (the default one in this case)
 #
-default: Interpreter.class Sexp.class Lexical.class Parse.class Printer.class Evaluator.class
+default: Interpreter.class Sexp.class Lexical.class Parse.class Printer.class Evaluator.class Typechecker.class
 
 # this target entry builds the Average class
 # the Average.class file is dependent on the Average.java file
@@ -22,6 +22,9 @@ default: Interpreter.class Sexp.class Lexical.class Parse.class Printer.class Ev
 #
 Interpreter.class: Interpreter.java
 		$(JCC) $(JFLAGS) Interpreter.java
+
+Typechecker.class: Typechecker.java
+		$(JCC) $(JFLAGS) Typechecker.java
 
 Sexp.class: Sexp.java
 		$(JCC) $(JFLAGS) Sexp.java
