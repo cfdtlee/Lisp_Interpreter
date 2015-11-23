@@ -15,6 +15,7 @@ class Parse {
 		this.lexical = lex;
 		this.printer = pri;
 		this.evaluator = eva;
+		typechecker = new Typechecker();
 		d.left = new Sexp();
 		d.left.left = new Sexp();
 		d.left.left.val = "NOTAFUNCTION";

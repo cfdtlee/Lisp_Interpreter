@@ -17,6 +17,11 @@ class Typechecker {
 				sexp.kind = "List";
 			else if (inte(sexp))
 				sexp.kind = "Nat";
+			else {
+				System.out.println("ERROR: UNBOUNDED LITERAL:" + sexp.val);
+				System.exit(1);
+				return null;
+			}
 			return sexp;
 		}
 		else {
@@ -34,16 +39,16 @@ class Typechecker {
 			// atom
 			// System.out.println("atom" + f.val);
 			if(eq(f, "CAR")) {
-				if(car(x).kind != "List") {
+				if(car(x).kind != "List") { //// !!!!
 					System.out.println("ERROR: CAR must have a list parameter");
 					System.exit(1);
 					return null;
 				}
-				car(car(x)).kind = "Nat"; //?
+				car(car(x)).kind = "Nat"; //!!!!
 				return car(car(x));
 			}
 			if(eq(f, "CDR")) {
-				if(car(x).kind != "List") {
+				if(car(x).kind != "List") { // !!!
 					System.out.println("ERROR: CDR must have a list parameter");
 					System.exit(1);
 					return null;
@@ -103,6 +108,11 @@ class Typechecker {
 				}
 			}
 			if(eq(f, "NULL")) {
+				if(check(x).kind != "List") { //!!!!!
+					System.out.println("ERROR: NULL's parameter must be List");
+					System.exit(1);
+					return null;
+				}
 				Sexp t = new Sexp();
 				t.kind = "Bool";
 				if(nil(car(x))) {
@@ -234,8 +244,20 @@ class Typechecker {
 	}
 	Sexp chclist(Sexp x) {
 		if(atom(x)) {
+			if (x.val.equals("T") || x.val.equals("F"))
+				x.kind = "Bool";
+			else if (x.val.equals("NIL"))
+				x.kind = "List";
+			else if (inte(x))
+				x.kind = "Nat";
+			else {
+				System.out.println("ERROR: UNBOUNDED LITERAL:" + x.val);
+				System.exit(1);
+				return null;
+			}
 			return x; //
 		}
+		x.kind = "List";
 		return cons(check(car(x)), chclist(cdr(x)));
 	}
 	Sexp evcon(Sexp x) {
