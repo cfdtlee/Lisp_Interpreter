@@ -13,7 +13,6 @@ class Evaluator {
 			if (sexp.val.equals("T") || sexp.val.equals("NIL") || inte(sexp))
 				return sexp;
 			else if (bound(sexp, a)) {
-
 				return getval(sexp, a);
 			}
 			else {

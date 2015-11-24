@@ -39,13 +39,20 @@ class Typechecker {
 			// atom
 			// System.out.println("atom" + f.val);
 			if(eq(f, "CAR")) {
-				if(car(x).kind != "List") { //// !!!!
+				if(!car(x).kind.equals("List")) { //// !!!!
 					System.out.println("ERROR: CAR must have a list parameter");
 					System.exit(1);
 					return null;
 				}
-				car(car(x)).kind = "Nat"; //!!!!
-				return car(car(x));
+				if(car(car(x)) != null) {
+					// car(car(x)).kind = "Nat"; //!!!!
+					return car(car(x));	
+				}
+				else {
+					// car(x).kind = "Nat"; //!!!!
+					return car(x);	
+				}
+				
 			}
 			if(eq(f, "CDR")) {
 				if(car(x).kind != "List") { // !!!
@@ -107,8 +114,14 @@ class Typechecker {
 					return t;
 				}
 			}
+			// (NULL . ((CDR . ((CONS . (3 . (NIL . NIL))) . NIL)) . NIL))
 			if(eq(f, "NULL")) {
-				if(check(x).kind != "List") { //!!!!!
+				if(x == null || cdr(x) == null || cdr(x).val == null) {
+					System.out.println("ERROR: ATOM can only have 1 para");
+					System.exit(1);
+					return null;
+				}
+				if(!car(x).kind.equals("List")) {//check(x).kind != "List") { //!!!!!
 					System.out.println("ERROR: NULL's parameter must be List");
 					System.exit(1);
 					return null;
@@ -139,16 +152,18 @@ class Typechecker {
 			if(eq(f, "PLUS")) {
 				Sexp t = new Sexp();
 				t.kind = "Nat";
-				if(car(x).kind != "Nat") {
+				// System.out.println(car(x).kind + car(cdr(x)).kind);
+				if(!car(x).kind.equals("Nat")) {
 					System.out.println("ERROR: PLUS' first parameter must be Nat");
 					System.exit(1);
 					return null;
 				}
-				if(car(cdr(x)).kind != "Nat") { // s2 is not Nat
+				if(!car(cdr(x)).kind.equals("Nat")) { // s2 is not Nat
 					System.out.println("ERROR: PLUS' second parameter must be Nat");
 					System.exit(1);
 					return null;
 				}
+				// System.out.println("car"+car(x).val);
 				int i = Integer.parseInt(car(x).val) + Integer.parseInt(car(cdr(x)).val);
 				t.val = Integer.toString(i);
 				return t;
@@ -156,12 +171,12 @@ class Typechecker {
 			if(eq(f, "LESS")) {
 				Sexp t = new Sexp();
 				t.kind = "Bool";
-				if(car(x).kind != "Nat") {
+				if(!car(x).kind.equals("Nat")) {
 					System.out.println("ERROR: LESS' first parameter must be Nat");
 					System.exit(1);
 					return null;
 				}
-				if(car(cdr(x)).kind != "Nat") { // s2 is not List
+				if(!car(cdr(x)).kind.equals("Nat")) { // s2 is not List
 					System.out.println("ERROR: LESS' second parameter must be Nat");
 					System.exit(1);
 					return null;
@@ -173,7 +188,7 @@ class Typechecker {
 			
 			
 			else {
-				System.out.println("ERROR: INVALID input");
+				System.out.println("ERROR: INVALID input: " + f.val);
 				System.exit(1);
 				return null;
 			}
@@ -257,7 +272,7 @@ class Typechecker {
 			}
 			return x; //
 		}
-		x.kind = "List";
+		// x.kind = "List"; 
 		return cons(check(car(x)), chclist(cdr(x)));
 	}
 	Sexp evcon(Sexp x) {
@@ -268,16 +283,17 @@ class Typechecker {
 		}
 		Sexp t = x;
 		Sexp cur = car(x);
-		if(cur.left.val != "T" || cur.left.val != "F") {
+		if(check(cur.left).kind != "Bool") {
 			System.out.println("ERROR: COND's CONDITION must be a BOOLEAN value!");
 			System.exit(1);
 			return null;
 		}
 		String kind = check(cur.right.left).kind;
 		t = cdr(t);
-		while (t.val != "NIL") {
+		while (t.val != null && !t.val.equals("NIL")) {// != "NIL"!!! 
+			System.out.println(t.val);
 			cur = car(t);
-			if(cur.left.val != "T" || cur.left.val != "F") {
+			if(check(cur.left).kind != "Bool") {
 				System.out.println("ERROR: COND's CONDITION must be a BOOLEAN value!");
 				System.exit(1);
 				return null;
@@ -287,8 +303,10 @@ class Typechecker {
 				System.exit(1);
 				return null;				
 			}
+			t = cdr(t);
 		}
 		x.kind = kind;
+		x.val = "1";
 		return x;
 	}
 }
